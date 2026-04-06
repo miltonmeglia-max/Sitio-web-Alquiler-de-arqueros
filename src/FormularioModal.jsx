@@ -4,7 +4,7 @@ const DIAS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
 
 function getHoyIndex() {
   const jsDay = new Date().getDay();
-  return jsDay === 0 ? 6 : jsDay - 1; // Lun=0 ... Dom=6
+  return jsDay === 0 ? 6 : jsDay - 1;
 }
 
 function getFecha(semana, diaIndex) {
@@ -48,7 +48,7 @@ export default function FormularioModal({ isOpen, onClose }) {
 
   const validate = () => {
     const e = {};
-   if (!semana || (semana !== 'hoy' && dia === null)) e.dia = true;
+    if (!semana || (semana !== 'hoy' && dia === null)) e.dia = true;
     if (!horario.trim()) e.horario = true;
     if (!ubicacion.trim()) e.ubicacion = true;
     if (!cancha) e.cancha = true;
@@ -68,10 +68,6 @@ export default function FormularioModal({ isOpen, onClose }) {
       fechaMsg = `${diaNombre} ${fecha} (${semanaLabel})`;
     }
     const msg = `Hola! Quiero reservar un arquero 🧤\n📅 ${fechaMsg}\n⏰ ${horario}hs\n📍 ${ubicacion}\n⚽ Fútbol ${cancha}`;
-  
-  
-  
-  ;
     window.open(`https://wa.me/5491164861915?text=${encodeURIComponent(msg)}`, '_blank');
     setEnviado(true);
   };
@@ -80,7 +76,7 @@ export default function FormularioModal({ isOpen, onClose }) {
 
   return (
     <div
-   className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 pt-16"
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center"
       onClick={onClose}
     >
       {/* Backdrop */}
@@ -88,10 +84,15 @@ export default function FormularioModal({ isOpen, onClose }) {
 
       {/* Modal */}
       <div
-className="relative w-full max-w-md rounded-2xl border border-[#30363d] bg-[#0d1117] overflow-hidden max-h-[90vh] overflow-y-auto"
+        className="relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl border border-[#30363d] bg-[#0d1117] overflow-hidden max-h-[92vh] overflow-y-auto"
         style={{ boxShadow: '0 0 0 1px #30363d, 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(29,185,84,0.07)' }}
         onClick={e => e.stopPropagation()}
       >
+        {/* Drag handle - solo mobile */}
+        <div className="flex justify-center pt-3 pb-1 sm:hidden">
+          <div className="w-10 h-1 rounded-full bg-[#30363d]" />
+        </div>
+
         {/* Barra verde superior */}
         <div className="h-1 w-full bg-[#1DB954]" />
 
@@ -122,11 +123,9 @@ className="relative w-full max-w-md rounded-2xl border border-[#30363d] bg-[#0d1
               {/* Chips semana */}
               <div className="flex gap-2 mb-3">
                 {[
-                  
-{ val: 'hoy', label: 'Hoy' },
-{ val: 'esta', label: 'Esta semana' },
-{ val: 'proxima', label: 'Próxima semana' }
-
+                  { val: 'hoy', label: 'Hoy' },
+                  { val: 'esta', label: 'Esta semana' },
+                  { val: 'proxima', label: 'Próxima semana' }
                 ].map(({ val, label }) => (
                   <button
                     key={val}
@@ -143,7 +142,7 @@ className="relative w-full max-w-md rounded-2xl border border-[#30363d] bg-[#0d1
               </div>
 
               {/* Chips días */}
-          {semana && semana !== 'hoy' && (
+              {semana && semana !== 'hoy' && (
                 <div className="flex flex-wrap gap-2">
                   {diasDisponibles.map(({ label, index }) => (
                     <button
