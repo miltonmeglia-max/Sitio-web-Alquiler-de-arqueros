@@ -404,7 +404,9 @@ function Precios() {
             <div className="font-black text-lg">Alquiler de <span className="text-[#1DB954]">Arqueros</span></div>
             <div className="flex flex-col sm:flex-row gap-2 sm:gap-6 text-sm text-gray-500 text-center">
               <a href="https://instagram.com/alquilerdearqueros" className="hover:text-white transition-colors">@alquilerdearqueros</a>
-              <a href="https://wa.me/545491164861915" className="hover:text-white transition-colors whitespace-nowrap">+54 11 6486-1915</a>
+              <a href="https://wa.me/5491164861915
+
+" className="hover:text-white transition-colors whitespace-nowrap">+54 11 6486-1915</a>
             </div>
             <p className="text-gray-600 text-sm">© 2026 Alquiler de Arqueros</p>
           </div>

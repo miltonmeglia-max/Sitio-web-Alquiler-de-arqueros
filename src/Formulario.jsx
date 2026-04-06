@@ -16,7 +16,9 @@ export default function Formulario() {
 - Zona: ${form.zona}
 - Fecha: ${form.fecha}
 - Horario: ${form.horario}${form.cancha ? `\n- Cancha: ${form.cancha}` : ''}${form.direccion ? `\n- Dirección: ${form.direccion}` : ''}`
-    window.open(`https://wa.me/545491164861915?text=${encodeURIComponent(mensaje)}`, '_blank')
+    window.open(`https://wa.me/5491164861915
+
+?text=${encodeURIComponent(mensaje)}`, '_blank')
   }
 
   return (
