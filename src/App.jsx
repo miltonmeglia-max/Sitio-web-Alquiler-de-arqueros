@@ -119,7 +119,7 @@ function Hero({ onOpenModal }) {
 <div className="flex flex-col sm:flex-row gap-3 mb-10">
             <button onClick={onOpenModal}
               className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 text-center glow-verde w-full sm:w-auto">
-              💬 Quiero un arquero ahora →
+              💬 Reservar arquero →
             </button>
             <a href="/sumate-como-arquero"
               className="border border-[#1DB954] text-[#1DB954] hover:bg-[#1DB954]/10 font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 text-center w-full sm:w-auto">
