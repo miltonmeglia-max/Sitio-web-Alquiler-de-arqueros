@@ -20,7 +20,7 @@ const testimonios = [
   { texto: 'El arquero que nos tocó era mejor que varios jugadores del equipo. Se re comprometió, hasta dirigía la defensa. Volví a pedir.', nombre: 'Gonzalo', zona: 'San Isidro' },
 ]
 
-function Navbar({ onOpenModal }) {
+function Navbar({ onOpenModal, modalOpen }) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -32,7 +32,9 @@ function Navbar({ onOpenModal }) {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0d1117]/95 backdrop-blur-md border-b border-[#30363d]' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-opacity duration-200 ${modalOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-all duration-300 ${scrolled ? 'bg-[#0d1117]/95 backdrop-blur-md border-b border-[#30363d]' : 'bg-transparent'}`}>
+
+
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="text-xl font-black tracking-tight">
             Alquiler de <span className="text-[#1DB954]">Arqueros</span>
@@ -423,7 +425,7 @@ function Precios() {
       return (
         <div className="min-h-screen bg-[#0d1117] text-white">
           <FormularioModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-          <Navbar onOpenModal={() => setModalOpen(true)} />
+         <Navbar onOpenModal={() => setModalOpen(true)} modalOpen={modalOpen} />
           <Hero onOpenModal={() => setModalOpen(true)} />
           <Arqueros />
           <ComoFunciona onOpenModal={() => setModalOpen(true)} />
