@@ -80,7 +80,7 @@ export default function FormularioModal({ isOpen, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+   className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4 pt-16"
       onClick={onClose}
     >
       {/* Backdrop */}
@@ -131,7 +131,7 @@ className="relative w-full max-w-md rounded-2xl border border-[#30363d] bg-[#0d1
                   <button
                     key={val}
                     onClick={() => setSemana(val)}
-                    className={`px-4 py-1.5 rounded-full text-sm font-semibold border transition-all duration-150 ${
+                    className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all duration-150 whitespace-nowrap ${
                       semana === val
                         ? 'bg-[#1DB954] border-[#1DB954] text-black'
                         : 'border-[#30363d] text-gray-400 hover:border-[#1DB954]/60 hover:text-white bg-[#161b22]'
