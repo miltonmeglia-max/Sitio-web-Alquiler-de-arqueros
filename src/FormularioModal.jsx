@@ -62,7 +62,7 @@ export default function FormularioModal({ isOpen, onClose }) {
     const diaNombre = DIAS[dia];
     const semanaLabel = semana === 'esta' ? 'esta semana' : 'la próxima semana';
     const msg = `Hola! Quiero reservar un arquero 🧤\n📅 ${diaNombre} ${fecha} (${semanaLabel})\n⏰ ${horario}hs\n📍 ${ubicacion}\n⚽ Fútbol ${cancha}`;
-    window.open(`https://wa.me/15491164861915?text=${encodeURIComponent(msg)}`, '_blank');
+    window.open(`https://wa.me/5491164861915?text=${encodeURIComponent(msg)}`, '_blank');
     setEnviado(true);
   };
 
