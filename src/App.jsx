@@ -99,10 +99,10 @@ function Navbar({ onOpenModal, modalOpen }) {
 
 function Hero({ onOpenModal }) {
   return (
-    <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
+    <section className="relative flex items-center pt-16 overflow-hidden">
       <div className="absolute inset-0 gradient-verde pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1DB954]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="max-w-6xl mx-auto px-6 py-8 md:py-16 w-full">
+      <div className="max-w-6xl mx-auto px-6 py-8 md:py-8 w-full">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-[#161b22] border border-[#30363d] rounded-full px-4 py-2 text-sm text-gray-400 mb-5 md:mb-8">
             <span className="w-2 h-2 bg-[#1DB954] rounded-full animate-pulse" />
@@ -118,23 +118,16 @@ function Hero({ onOpenModal }) {
             <span className="text-white font-semibold">En menos de 1 hora te confirmamos.</span>
           </p>
           
-<div className="flex flex-col sm:flex-row gap-3 mb-10">
-            <button onClick={onOpenModal}
-              className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 text-center glow-verde w-full sm:w-auto">
-              💬 Reservar arquero →
-            </button>
-            <a href="/sumate-como-arquero"
-              className="border border-[#1DB954] text-[#1DB954] hover:bg-[#1DB954]/10 font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 text-center w-full sm:w-auto">
-              🤜 Soy arquero y me sumo
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-6 text-sm text-gray-500">
-            <span className="flex items-center gap-2"><span className="text-[#1DB954]">🏆</span> +50 partidos organizados</span>
-            <span className="flex items-center gap-2"><span className="text-[#1DB954]">⚡</span> Respuesta en menos de 1 hora</span>
-          </div>
-        </div>
-      </div>
+<div className="flex flex-col sm:flex-row gap-3">
+  <button onClick={onOpenModal}
+    className="bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 hover:scale-105 text-center glow-verde w-full sm:w-auto">
+    💬 Reservar arquero →
+  </button>
+  <a href="/sumate-como-arquero"
+    className="border border-[#1DB954] text-[#1DB954] hover:bg-[#1DB954]/10 font-bold text-sm px-6 py-2.5 rounded-full transition-all duration-200 text-center w-full sm:w-auto">
+    🤜 Soy arquero y me sumo
+  </a>
+</div> </div> </div>
     </section>
   )
 }
@@ -163,7 +156,8 @@ function Arqueros() {
     <section id="arqueros" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <p className="text-[#1DB954] font-semibold text-sm uppercase tracking-widest mb-2">Arqueros reales</p>
-        <h2 className="text-4xl md:text-5xl font-black text-white mb-12">Gente que ataja<br />de verdad</h2>
+        <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Algunos de nuestros arqueros</h2>
+        <p className="text-gray-400 text-base mb-12">Contamos con arqueros en toda CABA y GBA — te asignamos el mejor según tu zona y horario.</p>
         <div
           ref={ref}
           className="flex md:hidden gap-4 overflow-x-auto pb-4"
