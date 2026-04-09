@@ -306,7 +306,7 @@ const disponibilidadValida = () =>
               <input
                 type="text"
                 inputMode="numeric"
-                placeholder="1164861915"
+             placeholder="1100000000"
                 value={form.whatsapp}
                 onChange={e => handleWhatsapp(e.target.value)}
                 className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white text-lg tracking-widest focus:outline-none transition-colors ${
