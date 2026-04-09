@@ -31,6 +31,15 @@ export default function FormularioModal({ isOpen, onClose }) {
     ? DIAS.map((d, i) => ({ label: d, index: i })).filter(d => d.index >= hoyIndex)
     : DIAS.map((d, i) => ({ label: d, index: i }));
 
+  // Cierra el modal con el botón nativo de Android
+  useEffect(() => {
+    if (!isOpen) return;
+    history.pushState(null, '', window.location.href);
+    const handlePopState = () => onClose();
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [isOpen]);
+
   useEffect(() => {
     if (!isOpen) {
       setSemana(null); setDia(null); setHorario('');
@@ -76,27 +85,19 @@ export default function FormularioModal({ isOpen, onClose }) {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center pt-16"
+      className="fixed inset-0 z-[60] flex items-end sm:items-center justify-center pt-16"
       onClick={onClose}
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" />
-
-      {/* Modal */}
       <div
         className="relative w-full sm:max-w-md rounded-t-2xl sm:rounded-2xl border border-[#30363d] bg-[#0d1117] overflow-hidden max-h-[92vh] overflow-y-auto"
         style={{ boxShadow: '0 0 0 1px #30363d, 0 40px 80px rgba(0,0,0,0.6), 0 0 60px rgba(29,185,84,0.07)' }}
         onClick={e => e.stopPropagation()}
       >
-        {/* Drag handle - solo mobile */}
         <div className="flex justify-center pt-3 pb-1 sm:hidden">
           <div className="w-10 h-1 rounded-full bg-[#30363d]" />
         </div>
-
-        {/* Barra verde superior */}
         <div className="h-1 w-full bg-[#1DB954]" />
-
-        {/* Header */}
         <div className="flex items-start justify-between px-6 pt-5 pb-4 border-b border-[#30363d]">
           <div>
             <h2 className="text-lg font-bold text-white leading-tight">Conseguí tu arquero</h2>
@@ -112,15 +113,11 @@ export default function FormularioModal({ isOpen, onClose }) {
 
         {!enviado ? (
           <div className="px-6 py-5 space-y-5">
-
-            {/* DÍA */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-semibold text-gray-300">¿Cuándo es el partido?</label>
                 {errors.dia && <span className="text-red-400 text-xs">Seleccioná un día</span>}
               </div>
-
-              {/* Chips semana */}
               <div className="flex gap-2 mb-3">
                 {[
                   { val: 'hoy', label: 'Hoy' },
@@ -140,8 +137,6 @@ export default function FormularioModal({ isOpen, onClose }) {
                   </button>
                 ))}
               </div>
-
-              {/* Chips días */}
               {semana && semana !== 'hoy' && (
                 <div className="flex flex-wrap gap-2">
                   {diasDisponibles.map(({ label, index }) => (
@@ -161,7 +156,6 @@ export default function FormularioModal({ isOpen, onClose }) {
               )}
             </div>
 
-            {/* HORARIO */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-semibold text-gray-300">Horario</label>
@@ -173,14 +167,11 @@ export default function FormularioModal({ isOpen, onClose }) {
                 value={horario}
                 onChange={e => setHorario(e.target.value)}
                 className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm outline-none transition-colors duration-150 ${
-                  errors.horario
-                    ? 'border-red-500/70 focus:border-red-400'
-                    : 'border-[#30363d] focus:border-[#1DB954]'
+                  errors.horario ? 'border-red-500/70 focus:border-red-400' : 'border-[#30363d] focus:border-[#1DB954]'
                 }`}
               />
             </div>
 
-            {/* UBICACIÓN */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-semibold text-gray-300">Ubicación</label>
@@ -192,14 +183,11 @@ export default function FormularioModal({ isOpen, onClose }) {
                 value={ubicacion}
                 onChange={e => setUbicacion(e.target.value)}
                 className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 text-sm outline-none transition-colors duration-150 ${
-                  errors.ubicacion
-                    ? 'border-red-500/70 focus:border-red-400'
-                    : 'border-[#30363d] focus:border-[#1DB954]'
+                  errors.ubicacion ? 'border-red-500/70 focus:border-red-400' : 'border-[#30363d] focus:border-[#1DB954]'
                 }`}
               />
             </div>
 
-            {/* TIPO DE CANCHA */}
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="text-sm font-semibold text-gray-300">Tipo de cancha</label>
@@ -222,14 +210,12 @@ export default function FormularioModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* CTA */}
             <button
               onClick={handleEnviar}
               className="w-full bg-[#1DB954] hover:bg-[#1aab4d] active:scale-[0.98] text-black font-bold py-3.5 rounded-full transition-all duration-150 text-sm mt-1"
             >
               💬 Enviar por WhatsApp →
             </button>
-
             <p className="text-center text-xs text-gray-600 pb-1">
               Te confirmamos en menos de 1 hora 🧤
             </p>
