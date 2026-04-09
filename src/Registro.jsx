@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzG9-0cNHs1HDhmUXmSQa7elKISWD1kyQm9IBdT1MuzpTh-vy5zp3Xq4EHntpXGeKt9/exec'
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzG9-0cNHs1HDhmUXmSQa7elKlSWD1kyQm9IBdT1MuzpTh-vy5zp3Xq4EHntpgXu-4N/exec'
 const CLOUDINARY_CLOUD = 'dlmqeunbv'
 const CLOUDINARY_PRESET = 'web-alquiler-de-arqueros'
 
