@@ -165,31 +165,23 @@ export default function Registro() {
     }))
   }
 
-  const zonasEspecificasIncompletas = () => {
-    if (form.zonasCaba && !form.barrios.trim()) return true
-    if (form.zonaNorteEspecifica && !form.localidadesNorte.trim()) return true
-    if (form.zonaSurEspecifica && !form.localidadesSur.trim()) return true
-    if (form.zonaOesteEspecifica && !form.localidadesOeste.trim()) return true
-    return false
-  }
-
   const zonaValida = () =>
-    form.todoCaba || form.zonasCaba ||
-    form.todoZonaNorte || form.zonaNorteEspecifica ||
-    form.todoZonaSur || form.zonaSurEspecifica ||
-    form.todoZonaOeste || form.zonaOesteEspecifica
+    form.todoCaba || (form.zonasCaba && form.barrios.trim()) ||
+    form.todoZonaNorte || (form.zonaNorteEspecifica && form.localidadesNorte.trim()) ||
+    form.todoZonaSur || (form.zonaSurEspecifica && form.localidadesSur.trim()) ||
+    form.todoZonaOeste || (form.zonaOesteEspecifica && form.localidadesOeste.trim())
 
   const resumenZonas = () => {
     const partes = []
     if (form.todoCaba) partes.push('Todo CABA')
-    else if (form.zonasCaba) partes.push('CABA (zonas específicas)')
+    else if (form.zonasCaba && form.barrios.trim()) partes.push(`CABA: ${form.barrios}`)
     if (form.todoZonaNorte) partes.push('Todo Zona Norte')
-    else if (form.zonaNorteEspecifica) partes.push('Zona Norte (específica)')
+    else if (form.zonaNorteEspecifica && form.localidadesNorte.trim()) partes.push(`Zona Norte: ${form.localidadesNorte}`)
     if (form.todoZonaSur) partes.push('Todo Zona Sur')
-    else if (form.zonaSurEspecifica) partes.push('Zona Sur (específica)')
+    else if (form.zonaSurEspecifica && form.localidadesSur.trim()) partes.push(`Zona Sur: ${form.localidadesSur}`)
     if (form.todoZonaOeste) partes.push('Todo Zona Oeste')
-    else if (form.zonaOesteEspecifica) partes.push('Zona Oeste (específica)')
-    return partes.join(', ') || '-'
+    else if (form.zonaOesteEspecifica && form.localidadesOeste.trim()) partes.push(`Zona Oeste: ${form.localidadesOeste}`)
+    return partes.join(' | ') || '-'
   }
 
   const toggleDia = (dia) => setForm(f => ({
@@ -220,7 +212,6 @@ export default function Registro() {
     form.fotosArquero.length > 0 &&
     disponibilidadValida() &&
     zonaValida() &&
-    !zonasEspecificasIncompletas() &&
     !edadError
 
   const enviar = async () => {
@@ -250,10 +241,6 @@ export default function Registro() {
         .map(d => `${d}: ${form.disponibilidad[d].desde} a ${form.disponibilidad[d].hasta}`).join(' | ')
 
       const zonasTexto = resumenZonas()
-        + (form.barrios ? ` — Barrios CABA: ${form.barrios}` : '')
-        + (form.localidadesNorte ? ` — Localidades Norte: ${form.localidadesNorte}` : '')
-        + (form.localidadesSur ? ` — Localidades Sur: ${form.localidadesSur}` : '')
-        + (form.localidadesOeste ? ` — Localidades Oeste: ${form.localidadesOeste}` : '')
 
       await fetch(SCRIPT_URL, {
         method: 'POST',
@@ -459,7 +446,7 @@ export default function Registro() {
                     className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.barrios.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
                   />
                   {!form.barrios.trim()
-                    ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos un barrio para poder continuar.</p>
+                    ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos un barrio para poder registrarte.</p>
                     : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
                   }
                 </div>
@@ -495,7 +482,7 @@ export default function Registro() {
                         className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesNorte.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
                       />
                       {!form.localidadesNorte.trim()
-                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder registrarte.</p>
                         : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
                       }
                     </div>
@@ -526,7 +513,7 @@ export default function Registro() {
                         className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesSur.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
                       />
                       {!form.localidadesSur.trim()
-                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder registrarte.</p>
                         : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
                       }
                     </div>
@@ -557,7 +544,7 @@ export default function Registro() {
                         className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesOeste.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
                       />
                       {!form.localidadesOeste.trim()
-                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder registrarte.</p>
                         : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
                       }
                     </div>
@@ -569,7 +556,7 @@ export default function Registro() {
 
             {!zonaValida() && (
               <div className="bg-[#161b22] border border-[#30363d] rounded-xl px-4 py-3 text-xs text-yellow-500">
-                ⚠️ Tenés que seleccionar al menos una zona para poder continuar.
+                ⚠️ Tenés que seleccionar al menos una zona para poder registrarte.
               </div>
             )}
           </div>
@@ -750,10 +737,6 @@ export default function Registro() {
                 },
                 { label: 'Edad', value: form.edad || '-' },
                 { label: 'Zonas', value: zonaValida() ? resumenZonas() : '✗ Falta seleccionar zona' },
-                { label: 'Barrios CABA', value: form.zonasCaba ? (!form.barrios.trim() ? '✗ Falta completar' : form.barrios) : '—' },
-                { label: 'Loc. Norte', value: form.zonaNorteEspecifica ? (!form.localidadesNorte.trim() ? '✗ Falta completar' : form.localidadesNorte) : '—' },
-                { label: 'Loc. Sur', value: form.zonaSurEspecifica ? (!form.localidadesSur.trim() ? '✗ Falta completar' : form.localidadesSur) : '—' },
-                { label: 'Loc. Oeste', value: form.zonaOesteEspecifica ? (!form.localidadesOeste.trim() ? '✗ Falta completar' : form.localidadesOeste) : '—' },
                 { label: 'Días', value: diasSemana.filter(d => form.disponibilidad[d].activo && form.disponibilidad[d].desde && form.disponibilidad[d].hasta).map(d => d.slice(0, 3)).join(', ') || '✗ Falta al menos un día' },
                 { label: 'Nivel', value: niveles.find(n => n.valor === form.nivel)?.label || '-' },
                 { label: 'Club', value: form.tipoClub || '-' },
