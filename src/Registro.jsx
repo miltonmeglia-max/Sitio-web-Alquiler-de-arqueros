@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzG9-0cNHs1HDhmUXmSQa7elKlSWD1kyQm9IBdT1MuzpTh-vy5zp3Xq4EHntpgXu-4N/exec'
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyaNbbF3YM1zc9lR7xndj-SeQHr2zEFK_8sfCx8i1p6Tk6BX55YnfOncOMUbFnjXr65/exec'
 const CLOUDINARY_CLOUD = 'dlmqeunbv'
 const CLOUDINARY_PRESET = 'web-alquiler-de-arqueros'
 
@@ -13,7 +13,7 @@ const niveles = [
   { valor: 5, label: 'Arquero activo en un club' },
 ]
 const formatos = ['Fútbol 5', 'Fútbol 7', 'Fútbol 8', 'Fútbol 9', 'Fútbol 11']
-const totalPasos = 7
+const totalPasos = 8
 
 const horasDisponibles = Array.from({ length: 29 }, (_, i) => {
   const hora = Math.floor(i / 2) + 9
@@ -55,7 +55,7 @@ function ModalSalir({ onConfirmar, onCancelar }) {
   )
 }
 
-function SelectHora({ value, onChange, placeholder, opciones }) {
+function SelectHora({ value, onChange, placeholder, opciones, error }) {
   const [abierto, setAbierto] = useState(false)
   const ref = useRef(null)
 
@@ -68,7 +68,7 @@ function SelectHora({ value, onChange, placeholder, opciones }) {
   return (
     <div ref={ref} className="relative">
       <button type="button" onClick={() => setAbierto(v => !v)}
-        className={`w-full flex items-center justify-between bg-[#0d1117] border rounded-xl px-4 py-2.5 text-sm transition-colors ${abierto ? 'border-[#1DB954]' : 'border-[#30363d] hover:border-gray-500'} ${value ? 'text-white' : 'text-gray-500'}`}>
+        className={`w-full flex items-center justify-between bg-[#0d1117] border rounded-xl px-4 py-2.5 text-sm transition-colors ${abierto ? 'border-[#1DB954]' : error ? 'border-red-500 hover:border-red-400' : 'border-[#30363d] hover:border-gray-500'} ${value ? 'text-white' : error ? 'text-red-400' : 'text-gray-500'}`}>
         <span>{value || placeholder}</span>
         <span className={`transition-transform duration-200 text-gray-500 ${abierto ? 'rotate-180' : ''}`}>▾</span>
       </button>
@@ -100,6 +100,23 @@ export default function Registro() {
     nombre: '', apellido: '',
     whatsapp: '',
     instagram: '', edad: '',
+    // Zonas CABA
+    todoCaba: false,
+    zonasCaba: false,
+    barrios: '',
+    // Zonas GBA Norte
+    todoZonaNorte: false,
+    zonaNorteEspecifica: false,
+    localidadesNorte: '',
+    // Zonas GBA Sur
+    todoZonaSur: false,
+    zonaSurEspecifica: false,
+    localidadesSur: '',
+    // Zonas GBA Oeste
+    todoZonaOeste: false,
+    zonaOesteEspecifica: false,
+    localidadesOeste: '',
+    // Resto
     disponibilidad: diasSemana.reduce((acc, dia) => ({ ...acc, [dia]: { activo: false, desde: '', hasta: '' } }), {}),
     formatosArco: [],
     nivel: null,
@@ -130,6 +147,51 @@ export default function Registro() {
     }
   }
 
+  // Lógica de zonas
+  const handleTodoCaba = () => {
+    setForm(f => ({
+      ...f,
+      todoCaba: !f.todoCaba,
+      zonasCaba: false,
+      barrios: !f.todoCaba ? '' : f.barrios,
+    }))
+  }
+
+  const handleZonasCaba = () => {
+    setForm(f => ({
+      ...f,
+      zonasCaba: !f.zonasCaba,
+      todoCaba: false,
+    }))
+  }
+
+  const zonasEspecificasIncompletas = () => {
+    if (form.zonasCaba && !form.barrios.trim()) return true
+    if (form.zonaNorteEspecifica && !form.localidadesNorte.trim()) return true
+    if (form.zonaSurEspecifica && !form.localidadesSur.trim()) return true
+    if (form.zonaOesteEspecifica && !form.localidadesOeste.trim()) return true
+    return false
+  }
+
+  const zonaValida = () =>
+    form.todoCaba || form.zonasCaba ||
+    form.todoZonaNorte || form.zonaNorteEspecifica ||
+    form.todoZonaSur || form.zonaSurEspecifica ||
+    form.todoZonaOeste || form.zonaOesteEspecifica
+
+  const resumenZonas = () => {
+    const partes = []
+    if (form.todoCaba) partes.push('Todo CABA')
+    else if (form.zonasCaba) partes.push('CABA (zonas específicas)')
+    if (form.todoZonaNorte) partes.push('Todo Zona Norte')
+    else if (form.zonaNorteEspecifica) partes.push('Zona Norte (específica)')
+    if (form.todoZonaSur) partes.push('Todo Zona Sur')
+    else if (form.zonaSurEspecifica) partes.push('Zona Sur (específica)')
+    if (form.todoZonaOeste) partes.push('Todo Zona Oeste')
+    else if (form.zonaOesteEspecifica) partes.push('Zona Oeste (específica)')
+    return partes.join(', ') || '-'
+  }
+
   const toggleDia = (dia) => setForm(f => ({
     ...f,
     disponibilidad: { ...f.disponibilidad, [dia]: { ...f.disponibilidad[dia], activo: !f.disponibilidad[dia].activo, desde: '', hasta: '' } }
@@ -147,8 +209,8 @@ export default function Registro() {
 
   const diaCompleto = (dia) => form.disponibilidad[dia].activo && form.disponibilidad[dia].desde && form.disponibilidad[dia].hasta
 
-const disponibilidadValida = () =>
-  diasSemana.some(dia => form.disponibilidad[dia].activo && form.disponibilidad[dia].desde && form.disponibilidad[dia].hasta)
+  const disponibilidadValida = () =>
+    diasSemana.some(dia => form.disponibilidad[dia].activo && form.disponibilidad[dia].desde && form.disponibilidad[dia].hasta)
 
   const puedeEnviar = () =>
     form.nombre &&
@@ -157,6 +219,8 @@ const disponibilidadValida = () =>
     form.fotoDni &&
     form.fotosArquero.length > 0 &&
     disponibilidadValida() &&
+    zonaValida() &&
+    !zonasEspecificasIncompletas() &&
     !edadError
 
   const enviar = async () => {
@@ -185,6 +249,12 @@ const disponibilidadValida = () =>
       const dispTexto = diasSemana.filter(d => form.disponibilidad[d].activo)
         .map(d => `${d}: ${form.disponibilidad[d].desde} a ${form.disponibilidad[d].hasta}`).join(' | ')
 
+      const zonasTexto = resumenZonas()
+        + (form.barrios ? ` — Barrios CABA: ${form.barrios}` : '')
+        + (form.localidadesNorte ? ` — Localidades Norte: ${form.localidadesNorte}` : '')
+        + (form.localidadesSur ? ` — Localidades Sur: ${form.localidadesSur}` : '')
+        + (form.localidadesOeste ? ` — Localidades Oeste: ${form.localidadesOeste}` : '')
+
       await fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -195,6 +265,7 @@ const disponibilidadValida = () =>
           whatsapp: form.whatsapp,
           instagram: form.instagram,
           edad: form.edad,
+          zonas: zonasTexto,
           disponibilidad: dispTexto,
           formatos: form.formatosArco.join(', '),
           nivel: `${form.nivel} - ${niveles.find(n => n.valor === form.nivel)?.label}`,
@@ -228,6 +299,19 @@ const disponibilidadValida = () =>
   const Chip = ({ label, activo, onClick }) => (
     <button onClick={onClick} className={`px-4 py-2 rounded-full text-sm font-medium border transition-all ${activo ? 'bg-[#1DB954] border-[#1DB954] text-black' : 'bg-transparent border-[#30363d] text-gray-400 hover:border-[#1DB954] hover:text-white'}`}>
       {label}
+    </button>
+  )
+
+  const ZonaBtn = ({ label, activo, onClick, descripcion }) => (
+    <button onClick={onClick}
+      className={`w-full flex items-center justify-between px-5 py-4 rounded-xl border transition-all text-left ${activo ? 'border-[#1DB954] bg-[#0d1f12]' : 'border-[#30363d] bg-[#161b22] hover:border-gray-500'}`}>
+      <div>
+        <p className={`font-semibold ${activo ? 'text-white' : 'text-gray-300'}`}>{label}</p>
+        {descripcion && <p className="text-xs text-gray-500 mt-0.5">{descripcion}</p>}
+      </div>
+      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${activo ? 'border-[#1DB954] bg-[#1DB954]' : 'border-[#30363d]'}`}>
+        {activo && <span className="text-black text-xs font-black">✓</span>}
+      </div>
     </button>
   )
 
@@ -275,7 +359,7 @@ const disponibilidadValida = () =>
         </div>
         <p className="text-gray-600 text-xs mb-10">Paso {paso} de {totalPasos}</p>
 
-        {/* PASO 1 */}
+        {/* PASO 1 — Datos personales */}
         {paso === 1 && (
           <div className="space-y-5">
             <h2 className="text-2xl font-bold mb-6">Datos personales</h2>
@@ -306,7 +390,7 @@ const disponibilidadValida = () =>
               <input
                 type="text"
                 inputMode="numeric"
-             placeholder=""
+                placeholder=""
                 value={form.whatsapp}
                 onChange={e => handleWhatsapp(e.target.value)}
                 className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white text-lg tracking-widest focus:outline-none transition-colors ${
@@ -340,14 +424,162 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 2 */}
+        {/* PASO 2 — Por dónde podés jugar */}
         {paso === 2 && (
+          <div className="space-y-5">
+            <h2 className="text-2xl font-bold mb-1">Por dónde podés jugar</h2>
+            <p className="text-gray-400 text-sm mb-4">Seleccioná todas las zonas donde estás disponible.</p>
+
+            {/* CABA */}
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 font-semibold">Ciudad de Buenos Aires</p>
+              <div className="space-y-2">
+                <ZonaBtn
+                  label="Todo CABA"
+                  descripcion="Cualquier barrio de la ciudad"
+                  activo={form.todoCaba}
+                  onClick={handleTodoCaba}
+                />
+                <ZonaBtn
+                  label="CABA — zonas específicas"
+                  descripcion="Indicá los barrios abajo"
+                  activo={form.zonasCaba}
+                  onClick={handleZonasCaba}
+                />
+              </div>
+
+              {/* Campo de barrios — solo si eligió CABA zonas específicas */}
+              {form.zonasCaba && (
+                <div className="mt-3">
+                  <input
+                    type="text"
+                    value={form.barrios}
+                    onChange={e => setField('barrios', e.target.value)}
+                    placeholder="Ej: Palermo, Villa Urquiza, Belgrano"
+                    className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.barrios.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
+                  />
+                  {!form.barrios.trim()
+                    ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos un barrio para poder continuar.</p>
+                    : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
+                  }
+                </div>
+              )}
+            </div>
+
+            {/* GBA */}
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-3 font-semibold mt-2">Gran Buenos Aires</p>
+              <div className="space-y-4">
+
+                {/* Zona Norte */}
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-400 font-medium">Zona Norte</p>
+                  <ZonaBtn
+                    label="Todo Zona Norte"
+                    activo={form.todoZonaNorte}
+                    onClick={() => setForm(f => ({ ...f, todoZonaNorte: !f.todoZonaNorte, zonaNorteEspecifica: false, localidadesNorte: '' }))}
+                  />
+                  <ZonaBtn
+                    label="Zona Norte — localidades específicas"
+                    descripcion="Indicá las localidades abajo"
+                    activo={form.zonaNorteEspecifica}
+                    onClick={() => setForm(f => ({ ...f, zonaNorteEspecifica: !f.zonaNorteEspecifica, todoZonaNorte: false }))}
+                  />
+                  {form.zonaNorteEspecifica && (
+                    <div>
+                      <input
+                        type="text"
+                        value={form.localidadesNorte}
+                        onChange={e => setField('localidadesNorte', e.target.value)}
+                        placeholder="Ej: San Isidro, Vicente López, Tigre"
+                        className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesNorte.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
+                      />
+                      {!form.localidadesNorte.trim()
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
+                      }
+                    </div>
+                  )}
+                </div>
+
+                {/* Zona Sur */}
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-400 font-medium">Zona Sur</p>
+                  <ZonaBtn
+                    label="Todo Zona Sur"
+                    activo={form.todoZonaSur}
+                    onClick={() => setForm(f => ({ ...f, todoZonaSur: !f.todoZonaSur, zonaSurEspecifica: false, localidadesSur: '' }))}
+                  />
+                  <ZonaBtn
+                    label="Zona Sur — localidades específicas"
+                    descripcion="Indicá las localidades abajo"
+                    activo={form.zonaSurEspecifica}
+                    onClick={() => setForm(f => ({ ...f, zonaSurEspecifica: !f.zonaSurEspecifica, todoZonaSur: false }))}
+                  />
+                  {form.zonaSurEspecifica && (
+                    <div>
+                      <input
+                        type="text"
+                        value={form.localidadesSur}
+                        onChange={e => setField('localidadesSur', e.target.value)}
+                        placeholder="Ej: Lanús, Avellaneda, Quilmes"
+                        className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesSur.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
+                      />
+                      {!form.localidadesSur.trim()
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
+                      }
+                    </div>
+                  )}
+                </div>
+
+                {/* Zona Oeste */}
+                <div className="space-y-2">
+                  <p className="text-sm text-gray-400 font-medium">Zona Oeste</p>
+                  <ZonaBtn
+                    label="Todo Zona Oeste"
+                    activo={form.todoZonaOeste}
+                    onClick={() => setForm(f => ({ ...f, todoZonaOeste: !f.todoZonaOeste, zonaOesteEspecifica: false, localidadesOeste: '' }))}
+                  />
+                  <ZonaBtn
+                    label="Zona Oeste — localidades específicas"
+                    descripcion="Indicá las localidades abajo"
+                    activo={form.zonaOesteEspecifica}
+                    onClick={() => setForm(f => ({ ...f, zonaOesteEspecifica: !f.zonaOesteEspecifica, todoZonaOeste: false }))}
+                  />
+                  {form.zonaOesteEspecifica && (
+                    <div>
+                      <input
+                        type="text"
+                        value={form.localidadesOeste}
+                        onChange={e => setField('localidadesOeste', e.target.value)}
+                        placeholder="Ej: Ramos Mejía, Morón, Haedo"
+                        className={`w-full bg-[#161b22] border rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none transition-colors ${!form.localidadesOeste.trim() ? 'border-red-500 focus:border-red-400' : 'border-[#1DB954]/40 focus:border-[#1DB954]'}`}
+                      />
+                      {!form.localidadesOeste.trim()
+                        ? <p className="text-red-400 text-xs mt-1.5">⚠️ Indicá al menos una localidad para poder continuar.</p>
+                        : <p className="text-gray-600 text-xs mt-1.5">Cuanto más específico, mejor para el match.</p>
+                      }
+                    </div>
+                  )}
+                </div>
+
+              </div>
+            </div>
+
+            {!zonaValida() && (
+              <div className="bg-[#161b22] border border-[#30363d] rounded-xl px-4 py-3 text-xs text-yellow-500">
+                ⚠️ Tenés que seleccionar al menos una zona para poder continuar.
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* PASO 3 — Disponibilidad */}
+        {paso === 3 && (
           <div className="space-y-4">
             <h2 className="text-2xl font-bold mb-2">Disponibilidad</h2>
-            <p className="text-gray-400 text-sm mb-2">Seleccioná los días que podés y el horario exacto.</p>
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl px-4 py-3 text-xs text-yellow-500">
-              ⚠️ Tenés que seleccionar al menos un día con horario completo para poder registrarte.
-            </div>
+            <p className="text-gray-400 text-sm mb-4">Seleccioná al menos un día e indicá desde qué hora hasta qué hora podés jugar.</p>
             {diasSemana.map(dia => {
               const { activo, desde, hasta } = form.disponibilidad[dia]
               const completo = activo && desde && hasta
@@ -371,6 +603,7 @@ const disponibilidadValida = () =>
                       <div className="flex-1">
                         <label className="text-xs text-gray-500 mb-1 block">Hasta</label>
                         <SelectHora value={hasta} onChange={v => setHorario(dia, 'hasta', v)} placeholder="Hasta"
+                          error={!!desde && !hasta}
                           opciones={desde ? horasDisponibles.slice(horasDisponibles.indexOf(desde) + 4) : horasDisponibles} />
                       </div>
                     </div>
@@ -381,18 +614,10 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 3 */}
-        {paso === 3 && (
+        {/* PASO 4 — Nivel */}
+        {paso === 4 && (
           <div className="space-y-6">
-            <h2 className="text-2xl font-bold mb-2">Tu nivel como arquero</h2>
-            <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-4">
-              <p className="text-sm text-white font-medium">¿Con qué frecuencia atajás?</p>
-              <p className="text-xs text-yellow-500 mt-1">No exageres — si no cumplís las expectativas, afecta tu reputación en la plataforma.</p>
-            </div>
-
-            <div className="bg-[#0d1f12] border border-[#1a3d20] rounded-xl px-4 py-3 text-sm text-[#1DB954]">
-              💰 El pago se acredita dentro de las 48hs de que presentes el código de confirmación al alquilador. La no presentación implica expulsión de la plataforma.
-            </div>
+            <h2 className="text-2xl font-bold mb-6">Tu nivel como arquero</h2>
 
             <div className="space-y-3">
               {niveles.map(n => (
@@ -436,8 +661,8 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 4 */}
-        {paso === 4 && (
+        {/* PASO 5 — Fotos */}
+        {paso === 5 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-2">Fotos de arquero</h2>
             <p className="text-gray-400 text-sm">Subí 2-3 fotos vestido de arquero. Estas fotos las van a ver los alquiladores.</p>
@@ -462,8 +687,8 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 5 */}
-        {paso === 5 && (
+        {/* PASO 6 — Video */}
+        {paso === 6 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-2">Video atajando <span className="text-gray-500 text-lg font-normal">(opcional)</span></h2>
             <p className="text-gray-400 text-sm">Subí un video propio atajando. Tiene que ser tuyo — no vale YouTube ni clips de otros.</p>
@@ -484,8 +709,8 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 6 */}
-        {paso === 6 && (
+        {/* PASO 7 — DNI */}
+        {paso === 7 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-2">Foto de tu DNI</h2>
             <div className="bg-[#0d1f12] border border-[#1a3d20] rounded-xl p-4 text-sm text-[#1DB954]">
@@ -508,8 +733,8 @@ const disponibilidadValida = () =>
           </div>
         )}
 
-        {/* PASO 7 */}
-        {paso === 7 && (
+        {/* PASO 8 — Confirmación */}
+        {paso === 8 && (
           <div className="space-y-6">
             <h2 className="text-2xl font-bold mb-2">Confirmación</h2>
             <div className="bg-[#161b22] border border-[#30363d] rounded-2xl p-6 space-y-3">
@@ -524,8 +749,12 @@ const disponibilidadValida = () =>
                     : '✗ Tiene que arrancar con 11 o 15'
                 },
                 { label: 'Edad', value: form.edad || '-' },
-                { label: 'Edad', value: form.edad || '-' },
-{ label: 'Días', value: diasSemana.filter(d => form.disponibilidad[d].activo && form.disponibilidad[d].desde && form.disponibilidad[d].hasta).map(d => d.slice(0, 3)).join(', ') || '✗ Falta al menos un día' },
+                { label: 'Zonas', value: zonaValida() ? resumenZonas() : '✗ Falta seleccionar zona' },
+                { label: 'Barrios CABA', value: form.zonasCaba ? (!form.barrios.trim() ? '✗ Falta completar' : form.barrios) : '—' },
+                { label: 'Loc. Norte', value: form.zonaNorteEspecifica ? (!form.localidadesNorte.trim() ? '✗ Falta completar' : form.localidadesNorte) : '—' },
+                { label: 'Loc. Sur', value: form.zonaSurEspecifica ? (!form.localidadesSur.trim() ? '✗ Falta completar' : form.localidadesSur) : '—' },
+                { label: 'Loc. Oeste', value: form.zonaOesteEspecifica ? (!form.localidadesOeste.trim() ? '✗ Falta completar' : form.localidadesOeste) : '—' },
+                { label: 'Días', value: diasSemana.filter(d => form.disponibilidad[d].activo && form.disponibilidad[d].desde && form.disponibilidad[d].hasta).map(d => d.slice(0, 3)).join(', ') || '✗ Falta al menos un día' },
                 { label: 'Nivel', value: niveles.find(n => n.valor === form.nivel)?.label || '-' },
                 { label: 'Club', value: form.tipoClub || '-' },
                 { label: 'Formatos', value: form.formatosArco.join(', ') || '-' },
@@ -559,8 +788,9 @@ const disponibilidadValida = () =>
             ← Atrás
           </button>
           {paso < totalPasos ? (
-            <button onClick={() => setPaso(p => p + 1)}
-              className="flex-1 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold py-4 rounded-full transition-all">
+            <button
+              onClick={() => setPaso(p => p + 1)}
+              className="flex-1 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold py-4 rounded-full transition-all disabled:opacity-40 disabled:cursor-not-allowed">
               Continuar →
             </button>
           ) : (
