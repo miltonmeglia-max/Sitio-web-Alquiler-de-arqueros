@@ -754,10 +754,6 @@ export default function Registro() {
               ))}
             </div>
 
-            <div className="bg-[#1a0a0a] border border-red-900/50 rounded-xl px-4 py-4 text-sm text-gray-300 leading-relaxed">
-              ⚠️ El alquilador recibe un código único antes del partido. <strong className="text-white">Pedíselo en persona al llegar</strong> — es la forma más rápida de confirmar tu presencia y cobrar dentro de las 48hs. Si por algún motivo no lo tiene, igual cobrás siempre que el alquilador lo confirme por otro medio. <strong className="text-red-400">No presentarte a un partido confirmado significa la expulsión inmediata de la plataforma</strong>, sin excepciones.
-            </div>
-
             <div className="bg-[#0d1117] border border-[#30363d] rounded-xl p-4 text-sm text-gray-400">
               📋 Vamos a analizar tu perfil. Si encaja con lo que buscamos, te contactamos por WhatsApp. <strong className="text-white">No todos los registros son aprobados.</strong>
             </div>
