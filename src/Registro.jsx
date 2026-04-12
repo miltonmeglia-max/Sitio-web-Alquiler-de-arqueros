@@ -739,10 +739,7 @@ export default function Registro() {
                 { label: 'Zonas', value: zonaValida() ? resumenZonas() : '✗ Falta seleccionar zona' },
                 { label: 'Días', value: diasSemana.filter(d => form.disponibilidad[d].activo && form.disponibilidad[d].desde && form.disponibilidad[d].hasta).map(d => d.slice(0, 3)).join(', ') || '✗ Falta al menos un día' },
                 { label: 'Nivel', value: niveles.find(n => n.valor === form.nivel)?.label || '-' },
-                { label: 'Club', value: form.tipoClub || '-' },
-                { label: 'Formatos', value: form.formatosArco.join(', ') || '-' },
-                { label: 'Fotos', value: form.fotosArquero.length > 0 ? `✓ ${form.fotosArquero.length} foto/s` : '✗ Falta subir' },
-                { label: 'Video', value: form.video ? '✓ Subido' : 'No subió video' },
+                { label: 'Foto', value: form.fotosArquero.length > 0 ? `✓ ${form.fotosArquero.length} foto/s` : '✗ Falta subir' },
                 { label: 'DNI', value: form.fotoDni ? '✓ Subido' : '✗ Falta subir' },
               ].map(({ label, value }) => (
                 <div key={label} className="flex justify-between text-sm border-b border-[#30363d] pb-2 last:border-0 last:pb-0">
