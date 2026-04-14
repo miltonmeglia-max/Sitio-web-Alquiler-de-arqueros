@@ -31,7 +31,6 @@ export default function FormularioModal({ isOpen, onClose }) {
     ? DIAS.map((d, i) => ({ label: d, index: i })).filter(d => d.index >= hoyIndex)
     : DIAS.map((d, i) => ({ label: d, index: i }));
 
-  // Cierra el modal con el botón nativo de Android
   useEffect(() => {
     if (!isOpen) return;
     history.pushState(null, '', window.location.href);
@@ -209,6 +208,10 @@ export default function FormularioModal({ isOpen, onClose }) {
                 ))}
               </div>
             </div>
+
+            <p className="text-center text-xs text-gray-500 font-bold">
+              💰 El costo del servicio es de $13.000
+            </p>
 
             <button
               onClick={handleEnviar}
