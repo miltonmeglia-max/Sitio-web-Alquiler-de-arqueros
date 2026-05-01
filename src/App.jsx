@@ -1,7 +1,7 @@
 import FormularioModal from './FormularioModal';
 import { useState, useEffect, useRef } from 'react'
 import Registro from './Registro'
-
+import alejo from './assets/fotos-arqueros/Alejo.png'
 import emiliano from './assets/fotos-arqueros/emiliano.jpg'
 import milton from './assets/fotos-arqueros/milton.png'
 import rodrigo from './assets/fotos-arqueros/rodrigo.jpeg'
@@ -12,6 +12,7 @@ const arqueros = [
   { nombre: 'Emiliano', zona: 'Zona sur y CABA', partidos: 6, foto: emiliano },
   { nombre: 'Rodrigo', zona: 'CABA', partidos: 4, foto: rodrigo },
   { nombre: 'Jonathan', zona: 'CABA', partidos: 4, foto: jonathan },
+  { nombre: 'Alejo', zona: 'CABA', partidos: 4, foto: alejo },  // ← nuevo
 ]
 
 const testimonios = [
@@ -158,31 +159,20 @@ function Arqueros() {
         <p className="text-[#1DB954] font-semibold text-sm uppercase tracking-widest mb-2">Arqueros reales</p>
         <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Algunos de nuestros arqueros</h2>
         <p className="text-gray-400 text-base mb-12">Contamos con arqueros en toda CABA y GBA — te asignamos el mejor según tu zona y horario.</p>
+
+        {/* ✅ Carrusel para TODOS los tamaños */}
         <div
           ref={ref}
-          className="flex md:hidden gap-4 overflow-x-auto pb-4"
+          className="flex gap-4 overflow-x-auto pb-4"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'auto' }}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
         >
           {duplicated.map((a, idx) => (
-            <div key={idx} className="bg-[#161b22] border border-[#30363d] rounded-2xl overflow-hidden flex-shrink-0 w-[75vw]">
+            <div key={idx} className="bg-[#161b22] border border-[#30363d] rounded-2xl overflow-hidden flex-shrink-0 w-[75vw] md:w-72">
               <img src={a.foto} alt={a.nombre} className="w-full h-56 object-cover object-top" />
-              <div className="p-4">
-                <p className="text-white font-bold text-lg">{a.nombre}</p>
-                <p className="text-gray-400 text-sm">Disponible en {a.zona}</p>
-                <div className="flex items-center justify-between mt-3">
-                  <p className="text-gray-500 text-sm">{a.partidos} partidos</p>
-                  <span className="bg-[#1DB954]/20 border border-[#1DB954]/40 text-[#1DB954] text-xs font-bold px-3 py-1 rounded-full">✓ Verificado</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="hidden md:grid grid-cols-4 gap-4">
-          {arqueros.map((a) => (
-            <div key={a.nombre} className="bg-[#161b22] border border-[#30363d] rounded-2xl overflow-hidden card-hover">
-              <img src={a.foto} alt={a.nombre} className="w-full h-52 object-cover object-top" />
               <div className="p-4">
                 <p className="text-white font-bold text-lg">{a.nombre}</p>
                 <p className="text-gray-400 text-sm">Disponible en {a.zona}</p>
