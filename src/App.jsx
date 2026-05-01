@@ -12,7 +12,7 @@ const arqueros = [
   { nombre: 'Emiliano', zona: 'Zona sur y CABA', partidos: 6, foto: emiliano },
   { nombre: 'Rodrigo', zona: 'CABA', partidos: 4, foto: rodrigo },
   { nombre: 'Jonathan', zona: 'CABA', partidos: 4, foto: jonathan },
-  { nombre: 'Alejo', zona: 'CABA', partidos: 4, foto: alejo },  // ← nuevo
+  { nombre: 'Alejo', zona: 'Zona oeste y CABA', partidos: 4, foto: alejo },  // ← nuevo
 ]
 
 const testimonios = [
@@ -136,6 +136,9 @@ function Hero({ onOpenModal }) {
 function Arqueros() {
   const ref = useRef(null)
   const [isPaused, setIsPaused] = useState(false)
+  const isDragging = useRef(false)
+  const startX = useRef(0)
+  const scrollStart = useRef(0)
   const duplicated = [...arqueros, ...arqueros]
 
   useEffect(() => {
@@ -153,6 +156,26 @@ function Arqueros() {
     return () => clearInterval(interval)
   }, [isPaused])
 
+  const handleMouseDown = (e) => {
+    isDragging.current = true
+    startX.current = e.pageX - ref.current.offsetLeft
+    scrollStart.current = ref.current.scrollLeft
+    setIsPaused(true)
+  }
+
+  const handleMouseMove = (e) => {
+    if (!isDragging.current) return
+    e.preventDefault()
+    const x = e.pageX - ref.current.offsetLeft
+    const walk = (x - startX.current) * 1.5
+    ref.current.scrollLeft = scrollStart.current - walk
+  }
+
+  const handleMouseUp = () => {
+    isDragging.current = false
+    setIsPaused(false)
+  }
+
   return (
     <section id="arqueros" className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -160,19 +183,20 @@ function Arqueros() {
         <h2 className="text-4xl md:text-5xl font-black text-white mb-4">Algunos de nuestros arqueros</h2>
         <p className="text-gray-400 text-base mb-12">Contamos con arqueros en toda CABA y GBA — te asignamos el mejor según tu zona y horario.</p>
 
-        {/* ✅ Carrusel para TODOS los tamaños */}
         <div
           ref={ref}
-          className="flex gap-4 overflow-x-auto pb-4"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'auto' }}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
+          className="flex gap-4 overflow-x-auto pb-4 cursor-grab active:cursor-grabbing"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', scrollBehavior: 'auto', userSelect: 'none' }}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
         >
           {duplicated.map((a, idx) => (
             <div key={idx} className="bg-[#161b22] border border-[#30363d] rounded-2xl overflow-hidden flex-shrink-0 w-[75vw] md:w-72">
-              <img src={a.foto} alt={a.nombre} className="w-full h-56 object-cover object-top" />
+              <img src={a.foto} alt={a.nombre} className="w-full h-56 object-cover object-top" draggable="false" />
               <div className="p-4">
                 <p className="text-white font-bold text-lg">{a.nombre}</p>
                 <p className="text-gray-400 text-sm">Disponible en {a.zona}</p>
