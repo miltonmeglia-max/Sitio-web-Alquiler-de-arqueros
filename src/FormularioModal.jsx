@@ -210,7 +210,7 @@ export default function FormularioModal({ isOpen, onClose }) {
             </div>
 
             <p className="text-center text-xs text-gray-500 font-bold">
-              💰 El costo del servicio es de $13.000
+              💰 El costo del servicio es de $18.000
             </p>
 
             <button
