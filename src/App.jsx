@@ -359,14 +359,14 @@ function Precios() {
         <div className="bg-[#161b22] border border-[#30363d] rounded-2xl p-4 md:p-8 text-center">
           <div className="text-2xl md:text-4xl mb-2 md:mb-4">👥</div>
           <p className="text-gray-400 text-xs md:text-sm mb-1 md:mb-2">El equipo paga</p>
-          <p className="text-2xl md:text-5xl font-black text-white mb-1">$13k</p>
+          <p className="text-2xl md:text-5xl font-black text-white mb-1">$18k</p>
           <p className="text-gray-600 text-xs hidden md:block">por partido</p>
         </div>
         <div className="bg-[#161b22] border border-[#1DB954] rounded-2xl p-4 md:p-8 text-center relative overflow-hidden">
           <div className="absolute top-2 right-2 md:top-3 md:right-3 bg-[#1DB954]/20 border border-[#1DB954]/40 rounded-full px-2 py-0.5 text-[#1DB954] text-xs font-bold">El arquero</div>
           <div className="text-2xl md:text-4xl mb-2 md:mb-4">🧤</div>
           <p className="text-gray-400 text-xs md:text-sm mb-1 md:mb-2">El arquero cobra</p>
-          <p className="text-2xl md:text-5xl font-black text-[#1DB954] mb-1">$10k</p>
+          <p className="text-2xl md:text-5xl font-black text-[#1DB954] mb-1">$15k</p>
           <p className="text-white text-xs md:text-sm font-semibold">sin pagar la cancha</p>
         </div>
         <div className="bg-[#161b22] border border-[#30363d] rounded-2xl p-4 md:p-8 text-center">
