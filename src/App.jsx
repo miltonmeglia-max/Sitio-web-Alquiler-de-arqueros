@@ -13,16 +13,16 @@ import gonzalo from './assets/fotos-arqueros/Gonzalo.png'
 import sergio from './assets/fotos-arqueros/Sergio.png'
 
 const arqueros = [
-  { nombre: 'Milton', zona: 'Zona oeste', partidos: 8, foto: milton },
-  { nombre: 'Emiliano', zona: 'Zona sur y CABA', partidos: 6, foto: emiliano },
-  { nombre: 'Rodrigo', zona: 'CABA', partidos: 4, foto: rodrigo },
+  { nombre: 'Milton', zona: 'Zona oeste', partidos: 8, foto: Milton },
+  { nombre: 'Emiliano', zona: 'Zona sur y CABA', partidos: 6, foto: Emiliano },
+  { nombre: 'Rodrigo', zona: 'CABA', partidos: 4, foto: Rodrigo },
   { nombre: 'Jonathan', zona: 'CABA', partidos: 4, foto: jonathan },
-  { nombre: 'Alejo', zona: 'Zona oeste y CABA', partidos: 4, foto: alejo },
-  { nombre: 'Walter', zona: 'CABA', partidos: 2, foto: walter },
-  { nombre: 'Lautaro', zona: 'CABA', partidos: 1, foto: lautaro },
-  { nombre: 'Sergio', zona: 'Zona oeste y CABA', partidos: 3, foto: sergio },
-  { nombre: 'Gonzalo', zona: 'CABA y Zona norte', partidos: 1, foto: gonzalo },
-  { nombre: 'German', zona: 'CABA y Zona sur', partidos: 1, foto: german },
+  { nombre: 'Alejo', zona: 'Zona oeste y CABA', partidos: 4, foto: Alejo },
+  { nombre: 'Walter', zona: 'CABA', partidos: 2, foto: Walter },
+  { nombre: 'Lautaro', zona: 'CABA', partidos: 1, foto: Lautaro },
+  { nombre: 'Sergio', zona: 'Zona oeste y CABA', partidos: 3, foto: Sergio },
+  { nombre: 'Gonzalo', zona: 'CABA y Zona norte', partidos: 1, foto: Gonzalo },
+  { nombre: 'German', zona: 'CABA y Zona sur', partidos: 1, foto: German },
 ]
 
 const testimonios = [
