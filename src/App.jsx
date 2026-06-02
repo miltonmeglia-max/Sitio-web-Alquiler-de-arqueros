@@ -6,13 +6,23 @@ import emiliano from './assets/fotos-arqueros/emiliano.jpg'
 import milton from './assets/fotos-arqueros/milton.png'
 import rodrigo from './assets/fotos-arqueros/rodrigo.jpeg'
 import jonathan from './assets/fotos-arqueros/jonathan.jpeg'
+import lautaro from './assets/fotos-arqueros/lautaro.png'
+import german from './assets/fotos-arqueros/german.jpg'
+import walter from './assets/fotos-arqueros/walter.png'
+import gonzalo from './assets/fotos-arqueros/gonzalo.png'
+import sergio from './assets/fotos-arqueros/sergio.png'
 
 const arqueros = [
   { nombre: 'Milton', zona: 'Zona oeste', partidos: 8, foto: milton },
   { nombre: 'Emiliano', zona: 'Zona sur y CABA', partidos: 6, foto: emiliano },
   { nombre: 'Rodrigo', zona: 'CABA', partidos: 4, foto: rodrigo },
   { nombre: 'Jonathan', zona: 'CABA', partidos: 4, foto: jonathan },
-  { nombre: 'Alejo', zona: 'Zona oeste y CABA', partidos: 4, foto: alejo },  // ← nuevo
+  { nombre: 'Alejo', zona: 'Zona oeste y CABA', partidos: 4, foto: alejo },
+  { nombre: 'Walter', zona: 'CABA', partidos: 2, foto: walter },
+  { nombre: 'Lautaro', zona: 'CABA', partidos: 1, foto: lautaro },
+  { nombre: 'Sergio', zona: 'Zona oeste y CABA', partidos: 3, foto: sergio },
+  { nombre: 'Gonzalo', zona: 'CABA y Zona norte', partidos: 1, foto: gonzalo },
+  { nombre: 'German', zona: 'CABA y Zona sur', partidos: 1, foto: german },
 ]
 
 const testimonios = [
