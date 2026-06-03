@@ -113,7 +113,7 @@ function Hero({ onOpenModal }) {
   return (
     <section className="relative flex items-center pt-16 overflow-hidden min-h-[90vh]">
       <div className="absolute inset-0 bg-[#0d1117]/75 pointer-events-none" />
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1DB954]/5 rounded-full blur-3xl pointer-events-none" />
+      
       <div className="max-w-6xl mx-auto px-6 py-8 md:py-8 w-full">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-[#161b22] border border-[#30363d] rounded-full px-4 py-2 text-sm text-gray-400 mb-5 md:mb-8">
