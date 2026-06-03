@@ -12,6 +12,7 @@ import german from './assets/fotos-arqueros/German.jpg'
 import walter from './assets/fotos-arqueros/Walter.png'
 import gonzalo from './assets/fotos-arqueros/Gonzalo.png'
 import sergio from './assets/fotos-arqueros/Sergio.png'
+import heroArquero from './assets/hero-arquero.png'
 
 const arqueros = [
   { nombre: 'Milton', zona: 'Zona oeste', partidos: 8, foto: milton },
@@ -110,8 +111,8 @@ function Navbar({ onOpenModal, modalOpen }) {
 
 function Hero({ onOpenModal }) {
   return (
-    <section className="relative flex items-center pt-16 overflow-hidden">
-      <div className="absolute inset-0 gradient-verde pointer-events-none" />
+    <section className="relative flex items-center pt-16 overflow-hidden min-h-[90vh]" style={{ backgroundImage: `url(${heroArquero})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="absolute inset-0 bg-[#0d1117]/75 pointer-events-none" />
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1DB954]/5 rounded-full blur-3xl pointer-events-none" />
       <div className="max-w-6xl mx-auto px-6 py-8 md:py-8 w-full">
         <div className="max-w-3xl">
