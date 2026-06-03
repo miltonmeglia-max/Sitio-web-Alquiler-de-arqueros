@@ -12,7 +12,7 @@ import german from './assets/fotos-arqueros/German.jpg'
 import walter from './assets/fotos-arqueros/Walter.png'
 import gonzalo from './assets/fotos-arqueros/Gonzalo.png'
 import sergio from './assets/fotos-arqueros/Sergio.png'
-import herored from './assets/hero-Red.jpg'
+import herored from './assets/hero-red.jpg'
 
 const arqueros = [
   { nombre: 'Milton', zona: 'Zona oeste', partidos: 8, foto: milton },
