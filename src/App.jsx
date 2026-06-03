@@ -1,3 +1,6 @@
+import { useState, useEffect, useRef } from 'react'
+
+
 import alejo from './assets/fotos-arqueros/Alejo.png'
 import emiliano from './assets/fotos-arqueros/emiliano.jpg'
 import milton from './assets/fotos-arqueros/milton.png'
