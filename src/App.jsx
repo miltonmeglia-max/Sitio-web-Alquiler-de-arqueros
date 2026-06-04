@@ -44,7 +44,7 @@ function Navbar({ onOpenModal, modalOpen }) {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-opacity duration-200 ${modalOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-all duration-300 ${scrolled ? 'bg-[#0d1117]/95 backdrop-blur-md border-b border-[#30363d]' : 'bg-transparent'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-opacity duration-200 ${modalOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'} transition-all duration-300 bg-[#0d1117]/95 backdrop-blur-md border-b border-[#30363d]`}>
 
 
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
