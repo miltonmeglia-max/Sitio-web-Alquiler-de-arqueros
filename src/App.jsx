@@ -112,7 +112,7 @@ function Navbar({ onOpenModal, modalOpen }) {
 function Hero({ onOpenModal }) {
   return (
     <section className="relative flex items-center pt-16 overflow-hidden min-h-[90vh]">
-      <div className="absolute inset-0 bg-[#0d1117]/75 pointer-events-none" />
+      
       
       <div className="max-w-6xl mx-auto px-6 py-8 md:py-8 w-full">
         <div className="max-w-3xl">
