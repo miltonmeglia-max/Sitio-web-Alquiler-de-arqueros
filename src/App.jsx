@@ -48,7 +48,7 @@ function Navbar({ onOpenModal, modalOpen }) {
 
 
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="text-xl font-black tracking-tight">
+          <div className="text-2xl font-black tracking-widest uppercase">
             Alquiler de <span className="text-[#1DB954]">Arqueros</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
@@ -370,7 +370,7 @@ function Precios() {
         <div className="bg-[#161b22] border border-[#30363d] rounded-2xl p-4 md:p-8 text-center">
           <div className="text-2xl md:text-4xl mb-2 md:mb-4">👥</div>
           <p className="text-gray-400 text-xs md:text-sm mb-1 md:mb-2">El equipo paga</p>
-          <p className="text-2xl md:text-5xl font-black text-white mb-1">$18k</p>
+          <p className="text-2xl md:text-5xl font-black text-white mb-1">$20k</p>
           <p className="text-gray-600 text-xs hidden md:block">por partido</p>
         </div>
         <div className="bg-[#161b22] border border-[#1DB954] rounded-2xl p-4 md:p-8 text-center relative overflow-hidden">
@@ -383,7 +383,7 @@ function Precios() {
         <div className="bg-[#161b22] border border-[#30363d] rounded-2xl p-4 md:p-8 text-center">
   <div className="text-2xl md:text-4xl mb-2 md:mb-4">⚡</div>
               <p className="text-gray-400 text-xs md:text-sm mb-1 md:mb-2">La plataforma</p>
-              <p className="text-2xl md:text-5xl font-black text-white mb-1">$3k</p>
+              <p className="text-2xl md:text-5xl font-black text-white mb-1">$5k</p>
               <p className="text-gray-600 text-xs">para sostener el servicio</p>
             </div>
           </div>
