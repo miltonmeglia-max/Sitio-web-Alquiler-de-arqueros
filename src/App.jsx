@@ -48,7 +48,7 @@ function Navbar({ onOpenModal, modalOpen }) {
 
 
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="text-2xl font-black tracking-widest uppercase">
+          <div className="text-2xl font-black tracking-wide">
             Alquiler de <span className="text-[#1DB954]">Arqueros</span>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm text-gray-400">
