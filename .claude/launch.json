@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "web-arqueros-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "fulbitos-com-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "../fulbitos-com", "run", "dev"],
+      "port": 3000
+    }
+  ]
+}
