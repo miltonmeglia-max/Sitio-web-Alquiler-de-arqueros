@@ -111,10 +111,10 @@ function Navbar({ onOpenModal, modalOpen }) {
 
 function Hero({ onOpenModal }) {
   return (
-    <section className="relative flex items-center pt-16 overflow-hidden min-h-[90vh]">
-      
-      
-      <div className="max-w-6xl mx-auto px-6 py-8 md:py-8 w-full">
+    <section className="relative flex items-center pt-16 overflow-hidden md:min-h-[90vh]">
+
+
+      <div className="max-w-6xl mx-auto px-6 py-10 md:py-8 w-full">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 bg-[#161b22] border border-[#30363d] rounded-full px-4 py-2 text-sm text-gray-400 mb-5 md:mb-8">
             <span className="w-2 h-2 bg-[#1DB954] rounded-full animate-pulse" />
